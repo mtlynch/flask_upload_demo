@@ -14,3 +14,5 @@ To run:
 sudo pip install -r requirements.txt
 FLASK_APP="demo/app.py" flask run
 ```
+
+The app is now serving at http://localhost:5000/
