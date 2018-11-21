@@ -29,6 +29,7 @@ logging.config.dictConfig({
     }
 })
 app = flask.Flask(__name__)
+logger = app.logger
 
 
 def ensure_dir_exists(dir_name):
@@ -44,7 +45,7 @@ def is_file_allowed(filename):
 
 
 @app.route('/uploads/<filename>')
-def uploaded_file(filename):
+def serve_uploaded_file(filename):
     return flask.send_from_directory(UPLOAD_FOLDER, filename)
 
 
@@ -61,9 +62,12 @@ def upload_file():
         if uploaded_file and is_file_allowed(uploaded_file.filename):
             filename = werkzeug.utils.secure_filename(uploaded_file.filename)
             ensure_dir_exists(UPLOAD_FOLDER)
-            uploaded_file.save(os.path.join(UPLOAD_FOLDER, filename))
+            save_path = os.path.join(UPLOAD_FOLDER, filename)
+            logger.info('Saving uploaded file "%s" to "%s"', filename,
+                        save_path)
+            uploaded_file.save(save_path)
             return flask.redirect(
-                flask.url_for('uploaded_file', filename=filename))
+                flask.url_for('serve_uploaded_file', filename=filename))
     return """
 <!doctype html>
 <html>
