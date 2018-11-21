@@ -31,6 +31,13 @@ logging.config.dictConfig({
 app = flask.Flask(__name__)
 logger = app.logger
 
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+
+logger = app.logger
+
 
 def ensure_dir_exists(dir_name):
     if not os.path.exists(dir_name):
