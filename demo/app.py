@@ -1,5 +1,4 @@
 import logging
-import logging.config
 import os
 
 import flask
@@ -9,27 +8,7 @@ UPLOAD_FOLDER = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), 'uploads')
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-logging.config.dictConfig({
-    'version': 1,
-    'formatters': {
-        'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-        }
-    },
-    'handlers': {
-        'wsgi': {
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://flask.logging.wsgi_errors_stream',
-            'formatter': 'default'
-        }
-    },
-    'root': {
-        'level': 'INFO',
-        'handlers': ['wsgi']
-    }
-})
 app = flask.Flask(__name__)
-logger = app.logger
 
 if __name__ != '__main__':
     gunicorn_logger = logging.getLogger('gunicorn.error')
