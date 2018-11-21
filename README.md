@@ -12,7 +12,10 @@ To run:
 
 ```bash
 sudo pip install -r requirements.txt
-FLASK_APP="demo/app.py" flask run
+gunicorn \
+  demo/app:app \
+  --bind 0.0.0.0:8000 \
+  --log-level info
 ```
 
 The app is now serving at http://localhost:5000/
