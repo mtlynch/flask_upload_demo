@@ -13,7 +13,7 @@ To run:
 ```bash
 sudo pip install -r requirements.txt
 gunicorn \
-  demo/app:app \
+  demo.app:app \
   --bind 0.0.0.0:8000 \
   --log-level info
 ```
