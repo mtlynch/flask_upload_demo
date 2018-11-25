@@ -18,4 +18,4 @@ gunicorn \
   --log-level info
 ```
 
-The app is now serving at http://localhost:5000/
+The app is now serving at http://localhost:8000/
